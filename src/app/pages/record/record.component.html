@@ -1,0 +1,30 @@
+<app-header [page-name]="record!.title! + ' ' + (record!.date | datetimeukr)">
+    <button icon="bi bi-arrow-left" pButton [routerLink]="['../treatment', {'id': treatment.id}]"></button>
+</app-header>
+<app-error-message [response-code]="error"></app-error-message>
+<div class="horizontal">
+    <div>
+        <div class="card patient">
+            <div class="title" style="width: 400px;">
+                <h3 class="center">{{treatment.patient!.pib}}</h3>
+                <span class="center">{{treatment.patient!.birthDate | dateukr }}</span>
+
+            </div>
+            <div class="center">Головний діагноз: {{treatment.mainDiagnosis}}</div>
+        </div>
+        <div class="card record" style="width: 400px;">
+            <div class="title">
+                <h3 class="center">{{record!.title!}}</h3>
+                <span class="center">{{record!.date | datetimeukr }}</span>
+
+            </div>
+            <div class="center"><button pButton icon="bi bi-trash" class="p-button-danger"
+                    (click)="remove()">Видалити</button>
+            </div>
+
+        </div>
+    </div>
+    <div class="card" style="width: 500px;">
+        <app-icf-assessments [assessments]="assessments"></app-icf-assessments>
+    </div>
+</div>

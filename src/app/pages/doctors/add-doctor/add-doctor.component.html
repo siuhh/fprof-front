@@ -1,0 +1,52 @@
+<p-dialog [(visible)]="credentialsPopup" [draggable]="false" [resizable]="false" [modal]="true"
+    header="Введіть дані для входу">
+    <div class="p-float-label">
+        <input [(ngModel)]="login" id="float-input" type="text" pInputText>
+        <label for="float-input" class="req">Логін</label>
+    </div>
+    <div class="p-float-label">
+        <input [(ngModel)]="password" id="float-input" type="text" pInputText>
+        <label for="float-input" class="req">Пароль</label>
+    </div>
+    <div class="buttons">
+        <button (click)="confirm()" pButton>Підтвердити</button>
+    </div>
+</p-dialog>
+<div class="wrap">
+    <div class="inputs">
+        <h2>Реєстрація лікаря</h2>
+        <div class="patient-data">
+            <div class="name">
+                <div class="p-float-label">
+                    <input [(ngModel)]="lastName" id="float-input" type="text" pInputText>
+                    <label for="float-input" class="req">Прізвище</label>
+                </div>
+                <div class="p-float-label">
+                    <input [(ngModel)]="firstName" id="float-input" type="text" pInputText>
+                    <label for="float-input" class="req">Ім'я</label>
+                </div>
+                <div class="p-float-label">
+                    <input [(ngModel)]="fathersName" id="float-input" type="text" pInputText>
+                    <label for="float-input" class="req">По батькові</label>
+                </div>
+            </div>
+            <div class="p-float-label">
+                <p-calendar [(ngModel)]="birthDate" [showIcon]="true" inputId="icon"></p-calendar>
+                <label for="float-input" class="req">Дата народження</label>
+            </div>
+            <div class="p-float-label">
+                <input [(ngModel)]="speciality" id="float-input" type="text" pInputText>
+                <label for="float-input" class="req">Спеціальність</label>
+            </div>
+        </div>
+        <p class="error">{{errorMessage}}</p>
+        <div class="buttons">
+            <button pButton class="p-button-danger" routerLink="/doctors">
+                Відмінити
+            </button>
+            <button pButton (click)="setCredentials()">
+                Підтвердити
+            </button>
+        </div>
+    </div>
+</div>

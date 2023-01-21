@@ -1,0 +1,15 @@
+<div class="wrapper" [class.selected]="selected && !ratable">
+    <span>{{assesment?.code}}</span>
+    <div class="buttons">
+        <button [disabled]="!ratable ? 'disabled' : null" (click)="assesment!.value = 0"
+            [class.btn-selected]="assesment!.value == 0" class="r0">0</button>
+        <button [disabled]="!ratable ? 'disabled' : null" (click)="assesment!.value = 1"
+            [class.btn-selected]="assesment!.value == 1" class="r1">1</button>
+        <button [disabled]="!ratable ? 'disabled' : null" (click)="assesment!.value = 2"
+            [class.btn-selected]="assesment!.value == 2" class="r2">2</button>
+        <button [disabled]="!ratable ? 'disabled' : null" (click)="assesment!.value = 3"
+            [class.btn-selected]="assesment!.value == 3" class="r3">3</button>
+        <button [disabled]="!ratable ? 'disabled' : null" (click)="assesment!.value = 4"
+            [class.btn-selected]="assesment!.value == 4" class="r4">4</button>
+    </div>
+</div>

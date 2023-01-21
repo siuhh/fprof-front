@@ -1,0 +1,15 @@
+@import "src/colors";
+
+.ratings {
+    display: flex;
+    align-items: center;
+
+    button {
+        margin-right: 5px;
+        height: fit-content;
+    }
+}
+
+.selected {
+    background-color: $selected;
+}

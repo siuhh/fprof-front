@@ -1,0 +1,35 @@
+<app-header page-name="Проходять лікування">
+    <button pButton [routerLink]="['/add-treatment']">
+        <span>Додати</span>
+    </button>
+    <button pButton [routerLink]="['/treatments-archive']">
+        <span>Архів</span>
+    </button>
+</app-header>
+<p-table id="table" [value]="filteredTreatments" [scrollable]="true" scrollHeight="400px"
+    [tableStyle]="{'min-width': '50rem'}">
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="search($event)" placeholder="Пошук" />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>ПІБ</th>
+            <th>Дата поступлення</th>
+            <th>Головний діагноз</th>
+            <th>Дата народження</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-treatment>
+        <tr (click)="select(treatment)" [class.selected]="selected == treatment">
+            <td>{{treatment.patient.pib}}</td>
+            <td>{{treatment.admissionDate | dateukr}}</td>
+            <td>{{treatment.mainDiagnosis}}</td>
+            <td>{{treatment.patient.birthDate | dateukr}}</td>
+        </tr>
+    </ng-template>
+</p-table>

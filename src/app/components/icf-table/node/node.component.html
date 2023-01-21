@@ -1,0 +1,18 @@
+<div class="node" *ngIf="!isExcluded()">
+    <div class="element" *ngIf="this.node.parent != undefined">
+        <td *ngIf="node.nodes.length > 0">
+            <button (click)="expanded = !expanded;" class="expand" [class.expanded]="expanded">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </td>
+        <td class="text" (click)="select()" [class.child-hovered]="childHovered">
+            {{node.name}}
+        </td>
+    </div>
+    <div *ngIf="node.nodes.length > 0" class="childs" [class.hidden]="!expanded" (mouseenter)="childHovered = true"
+        (mouseleave)="childHovered = false">
+        <div *ngFor="let n of node.nodes">
+            <app-node [exclude]="exclude" [node]="n" (nodeSelected)="childSelected($event)"></app-node>
+        </div>
+    </div>
+</div>

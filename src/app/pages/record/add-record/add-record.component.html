@@ -1,0 +1,57 @@
+<p-dialog header="МКФ" [style]="{width: '1000px'}" [(visible)]="addIcfRecordPopup" [draggable]="false"
+    [resizable]="false" [modal]="true">
+    <div class="icf-record">
+        <div class="rating card">
+            <p-scrollPanel [style]="{width: '100%', height: '480px'}">
+                <p *ngIf="assessments.length == 0" class="center">
+                    <span>
+                        <span>Оберіть варіанти праворуч</span>
+                        <span *ngIf="treatment.records!.length > 0">, або скопіюйте з попереднього запису</span>
+                    </span>
+                </p>
+                <div class="rating">
+                    <app-icf-assessments [editable]="true" [assessments]="assessments"
+                        (onRemove)="remove($event)"></app-icf-assessments>
+
+                </div>
+            </p-scrollPanel>
+        </div>
+        <div class="card icf">
+            <p-scrollPanel [style]="{width: '100%', height: '480px'}">
+                <app-icf-table #icfTable (nodeSelected)="select()"></app-icf-table>
+            </p-scrollPanel>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <button [disabled]=" treatment.records!.length < 1" (click)="getDataFromLastRecord()" pButton>
+            Скопіювати з попереднього
+        </button>
+        <button (click)="addIcfRecordPopup = false" pButton>
+            Готово
+        </button>
+    </ng-template>
+</p-dialog>
+<div class="wrap">
+    <div class="main-info card">
+        <h2>Новий запис</h2>
+        <div class="p-float-label">
+            <input [(ngModel)]="title" id="float-input" type="text" pInputText>
+            <label for="float-input">Заголовок</label>
+        </div>
+        <button pButton (click)="addIcfRecord()">
+            Додати запис за МКФ
+        </button>
+        <div class="p-float-label">
+            <p-calendar [(ngModel)]="date" [showIcon]="true" [showTime]="true" inputId="icon"></p-calendar>
+            <label for="float-input" class="req">Дата</label>
+        </div>
+        <div class="foot">
+            <button class="p-button-danger" pButton [routerLink]="['../treatment', {'id': treatment.id}]">
+                Скасувати
+            </button>
+            <button pButton (click)="confirm()">
+                Зберегти
+            </button>
+        </div>
+    </div>
+</div>

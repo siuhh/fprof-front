@@ -1,0 +1,14 @@
+@import "../../../colors.scss";
+
+.wrap {
+    padding: 5%;
+}
+
+tr.selected {
+    color: white;
+    background-color: $selected;
+}
+
+tr:hover:not(.selected) {
+    background-color: $hover;
+}

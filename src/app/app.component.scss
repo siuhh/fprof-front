@@ -1,0 +1,22 @@
+body {
+    display: flex;
+}
+
+main {
+    width: 100%;
+    padding: 0px 5% 0 5%;
+    box-sizing: border-box;
+}
+
+.body {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.error {
+    margin-top: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: red;
+}

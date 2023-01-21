@@ -1,0 +1,140 @@
+<p-dialog [(visible)]="grantAccessPopup" [draggable]="false" [resizable]="false" [modal]="true"
+    header="Виберіть лікаря">
+    <div class="list-element" *ngFor="let doctor of allDoctors" (click)="grantAccess(doctor)">
+        <span class="badge">{{doctor.speciality}}</span>
+        {{doctor.pib}}
+    </div>
+    <p *ngIf="allDoctors.length == 0">Немає доступних лікарів</p>
+</p-dialog>
+<p-dialog [style]="{width: '30vw', height: '70vh'}" [(visible)]="additionalInfoPopup" [draggable]="false"
+    [resizable]="false" [modal]="true" header="Додаткова інформація" *ngIf="treatment != undefined">
+    <p>{{treatment.additionalInfo}}</p>
+</p-dialog>
+<p-dialog [style]="{width: '90vw', height: '100vh'}" [(visible)]="graphPopup" [draggable]="false" [resizable]="false"
+    [modal]="true" header="Динаміка змін">
+    <p-tabView>
+        <p-tabPanel rightIcon="bi bi-graph-up">
+            <div style="width:auto;height:auto;display: flex; justify-content: center; align-items: center;">
+                <p-chart [options]="graphOptions" style="width:100%;height:100%; margin:0;" #chart type="line"
+                    [data]="lineGraphData">
+                </p-chart>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel leftIcon="bi bi-bar-chart-line">
+            <div *ngFor="let data of barGraphData" style="width:auto;height:auto;display: flex; ">
+                <p-chart [options]="graphOptions" style="width:100%;height:100%; margin:0;" #chart type="bar"
+                    [data]="data">
+                </p-chart>
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+</p-dialog>
+<p-confirmDialog header="Підтвердіть" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<app-header [page-name]="treatment.patient?.pib ?? 'Помилка'"></app-header>
+<div class="wrap" *ngIf="treatment != undefined">
+    <div class="left">
+        <div class="card patient">
+            <div class="title">
+                <h3 class="center">{{treatment.patient!.pib}}</h3>
+                <span class="center">{{treatment.patient!.birthDate | dateukr }}</span>
+
+            </div>
+            <div>Номер історії хвороб: {{treatment.patient!.historyNumber}}</div>
+        </div>
+
+        <div class="card info" *ngIf="treatment != undefined">
+            <h3 class="center">
+                <span class="badge badge-red" *ngIf="isInArchive()">Архів</span>
+            </h3>
+            <div class="row">
+                <span>Головний діагноз:</span>
+                <span>{{treatment.mainDiagnosis}}</span>
+            </div>
+            <div class="row">
+                <span>Дата поступлення:</span>
+                <span>{{treatment.admissionDate | dateukr}}</span>
+            </div>
+            <div class="row" *ngIf="isInArchive()">
+                <span>Дата виписки:</span>
+                <span>{{treatment.dischargeDate! | dateukr}}</span>
+            </div>
+            <div class="foot">
+                <button pButton (click)="this.additionalInfoPopup = true">Додаткова
+                    інформація</button>
+                <button *ngIf="!isInArchive()" pButton class="p-button-danger" (click)="discharge($event)"
+                    icon="bi bi-database-lock"></button>
+            </div>
+        </div>
+        <div class="card" *ngIf="archive.length != 0  && !isInArchive()">
+            <h3>Минулі лікування</h3>
+
+            <p-scrollPanel [style]="{width: '100%', height: '200px'}">
+                <div>
+                    <div class="list-element" *ngFor="let treat of archive" [class.selected]="selectedArchive == treat"
+                        (click)="selectArchive(treat)">
+                        <span class="badge">{{treat.mainDiagnosis}}</span>
+                        {{treat.admissionDate | dateukr }}
+                    </div>
+                </div>
+            </p-scrollPanel>
+        </div>
+
+        <div class="card" *ngIf="isClinic()">
+            <h3>Лікарі з доступом до сторінки</h3>
+
+            <p-scrollPanel [style]="{width: '100%', height: '200px'}">
+                <div *ngIf="doctorsWithAccess.length != 0; else empty">
+                    <div class="list-element" *ngFor="let doctor of doctorsWithAccess"
+                        [class.selected]="selectedDoctor == doctor" (click)="selectDoctor(doctor)">
+                        <span class="badge">{{doctor.speciality}}</span>
+                        {{doctor.pib}}
+                    </div>
+                </div>
+            </p-scrollPanel>
+            <ng-template #empty>
+                <p>Ні один лікар не має доступу</p>
+            </ng-template>
+            <div class="foot">
+                <button pButton class="add-button" (click)="addDoctor()">Додати</button>
+                <button pButton icon="bi bi-trash" class="p-button-danger" (click)="removeAccess()"
+                    [disabled]="selectedDoctor == undefined"></button>
+            </div>
+        </div>
+    </div>
+    <div class="card" style="width: 500px;">
+        <div class="head">
+            <h3 class="center">Стан пацієнта за останніми записами</h3>
+            <button (click)="showGraphs()" pButton icon="bi bi-graph-up"
+                [disabled]="lastRecord.selected.length <= 0"></button>
+        </div>
+        <app-icf-assessments #lastRecord [assessments]="lastRecordAssessments"></app-icf-assessments>
+
+        <p *ngIf="lastRecordAssessments.length == 0 ">Додайте нові записи щоб переглядати динаміку змін та стан пацієнта
+        </p>
+    </div>
+    <div class="records card">
+        <div class="head">
+            <h3 class="center">Записи</h3>
+            <button pButton [routerLink]="['../add-record', {id: treatment.id}]">Додати</button>
+        </div>
+
+        <p-table [value]="treatment.records!" *ngIf="treatment.records!.length > 0; else norecords ">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Дата</th>
+                    <th>Заголовок</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-record>
+                <tr (click)="openRecord(record)">
+                    <td>{{record.date | datetimeukr}}</td>
+                    <td>{{record.title }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <ng-template class="center" #norecords>
+            <p class="center">Немає записів</p>
+        </ng-template>
+    </div>
+</div>
+<app-error-message [response-code]="error"></app-error-message>

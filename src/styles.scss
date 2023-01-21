@@ -1,1 +1,94 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: ubuntu-regular;
+    src: url(assets/Ubuntu-Regular.ttf) format("opentype");
+}
+
+@import "src/colors";
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: "ubuntu-regular";
+    transition: .1s;
+}
+
+
+.card {
+    margin-top: 1%;
+    margin: 10px 5px 0px 5px;
+
+    padding: 10px 20px 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.168);
+    width: fit-content;
+    height: fit-content;
+
+    .foot {
+        display: flex;
+
+        button {
+            margin: 0 5px 0 5px;
+        }
+    }
+
+    .head {
+        display: flex;
+
+        h3 {
+            width: 100%;
+            grid-column: 1;
+            margin: 0;
+        }
+
+        button {
+            margin: 0px 1px 0 1px;
+            grid-column: 2;
+            justify-content: center;
+        }
+    }
+}
+
+.badge {
+    color: white;
+    border-radius: 5px;
+    background-color: $accent;
+    margin-left: 5px;
+    padding: 0 5px 0 5px;
+    box-shadow: 0 0 5px 1px #00000049;
+    margin-right: 5px;
+
+    &.badge-red {
+        background-color: #b53f3f;
+    }
+}
+
+.list-element {
+    user-select: none;
+    cursor: pointer;
+
+    margin: 5px 0 5px 0;
+    transition: .5s;
+    padding: 10px;
+    border-radius: 5px;
+
+    &:hover {
+        box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.168);
+        background-color: $hover;
+    }
+
+    &.selected {
+        background-color: $selected;
+        color: white;
+    }
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

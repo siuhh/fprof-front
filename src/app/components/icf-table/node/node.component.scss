@@ -1,0 +1,62 @@
+@import "src/colors";
+
+i {
+    transition: 200ms;
+}
+
+.expand {
+    margin-left: -2.5rem;
+    margin-right: 5px;
+    transition: 100ms linear all;
+
+    border: none;
+    box-shadow: none;
+    background-color: white;
+    border-radius: 100%;
+
+    width: 2.5rem;
+    min-width: 2.5rem;
+    height: 2.5rem;
+
+    font-size: large;
+
+    &:hover {
+        background-color: $hover;
+        box-shadow: none;
+    }
+
+    &.expanded {
+        transform: rotate(90deg);
+    }
+}
+
+.childs {
+    margin-left: 2.5rem;
+
+    &.hidden {
+        display: none;
+    }
+}
+
+.child-hovered {
+    background-color: #f7f7f7;
+}
+
+.element {
+    margin-bottom: 7px;
+}
+
+.text {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0em .5rem 0em .5rem;
+    height: 2.5rem;
+    border-radius: 5px;
+
+    user-select: none;
+    cursor: pointer;
+
+    &:hover:not(.selected) {
+        background-color: $hover;
+    }
+}

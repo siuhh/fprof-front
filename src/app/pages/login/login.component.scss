@@ -1,0 +1,41 @@
+.wrap {
+    padding-top: 10%;
+    display: flex;
+    justify-content: center;
+}
+
+.choose-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .buttons {
+        display: flex;
+        justify-content: space-around;
+
+        button {
+            margin: 5px;
+        }
+    }
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    span,
+    .buttons {
+        margin: 5px;
+    }
+
+    .buttons {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+}
+
+.error {
+    color: red;
+}

@@ -1,0 +1,7 @@
+<div class="ratings" *ngFor="let assessment of assessments" (click)="select(assessment)">
+    <button pButton icon="bi bi-trash" class="p-button-danger" (click)="remove(assessment)" *ngIf="editable">
+    </button>
+    <span>{{additionalInfo}}</span>
+    <app-rating [selected]="selected.includes(assessment)" [ratable]="editable" [assesment]="assessment"
+        style="width: 100%;"></app-rating>
+</div>

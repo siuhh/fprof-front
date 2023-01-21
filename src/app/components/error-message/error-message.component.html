@@ -1,0 +1,6 @@
+<div class="error">
+    <p [style]="getStyle()">
+        <i class="bi bi-exclamation-circle" *ngIf="getMessage() != ''"></i>
+        {{getMessage()}}
+    </p>
+</div>

@@ -1,0 +1,27 @@
+<div class="wrap">
+    <div *ngIf="loginMethod == undefined" class="choose-login">
+        <h2>Оберіть метод входу</h2>
+        <div class="buttons">
+            <button pButton (click)="loginMethod = 'Адміністратор'">Адміністратор</button>
+            <button pButton (click)="loginMethod = 'Лікар'">Лікар</button>
+        </div>
+    </div>
+    <div *ngIf="loginMethod != undefined" class="login-form">
+        <h2>{{loginMethod}}</h2>
+        <span class="p-float-label">
+            <input id="float-input" type="text" style="width: 250px;" pInputText [(ngModel)]="login">
+            <label for="float-input">Логін</label>
+        </span>
+        <span class="p-float-label">
+            <p-password [(ngModel)]="password" style="width: 300px;" [toggleMask]="true"
+                [feedback]="false"></p-password>
+            <label for="float-input">Пароль</label>
+        </span>
+        <div class="error">{{getError()}}</div>
+        <div class="buttons">
+            <button pButton (click)="loginMethod = undefined; response=200; login=''; password=''"
+                class="p-button-text">Назад</button>
+            <button [disabled]="loading" pButton (click)="logIn()">{{(loading ? "Вхід..." : "Увійти")}}</button>
+        </div>
+    </div>
+</div>

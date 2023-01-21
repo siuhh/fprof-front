@@ -1,0 +1,67 @@
+header {
+    position: relative;
+    z-index: 5;
+    background-color: rgb(255, 255, 255);
+
+    padding: 5px 5px 0 0;
+}
+
+.head {
+    height: fit-content;
+    border-radius: 10px;
+    width: 100%;
+
+    background-color: #ffffff;
+    box-shadow: 0 0 10px #00000034;
+    display: grid;
+    grid-template-columns: 2% auto 15%;
+    font-size: large;
+}
+
+.layout {
+    height: 60px;
+    padding: 10px 0 10px 0;
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    font-size: large;
+}
+
+.clinic-name {
+    color: #3F51B5;
+    font-size: 1.1em;
+    font-weight: bolder;
+
+    border-radius: 0 10px 10px 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    user-select: none;
+}
+
+.toolbar {
+    align-self: center;
+}
+
+.title {
+    align-self: center;
+    justify-self: center;
+    grid-column: 2;
+}
+
+.name {
+    align-self: center;
+    justify-self: end;
+    grid-column: 3;
+}
+
+:host ::ng-deep button {
+    margin: 0 5px 0 5px;
+    height: 40px;
+}
+
+.badge {
+    padding: 5px;
+}

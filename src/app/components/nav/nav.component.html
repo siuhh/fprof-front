@@ -1,0 +1,35 @@
+<div class="marg" [ngClass]="menuExpanded ? 'expanded' : 'collapced'"></div>
+<nav id="nav" [ngClass]="menuExpanded ? 'expanded' : 'collapced'">
+    <div class="expand" (click)="menuExpanded = !menuExpanded">
+        <div class="nav-e">
+            <div class="icon">
+                <i class="bi bi-three-dots"></i>
+            </div>
+            <span [class.invisible]="!menuExpanded">Згорнути</span>
+        </div>
+    </div>
+    <a [routerLink]="['/']" class="nav-e">
+        <div class="icon">
+            <i class="bi bi-journal-medical"></i>
+        </div>
+        <span [class.invisible]="!menuExpanded">Лікування</span>
+    </a>
+    <a *ngIf="isAdmin()" [routerLink]="['doctors']" class="nav-e">
+        <div class="icon">
+            <i class="bi bi-people"></i>
+        </div>
+        <span [class.invisible]="!menuExpanded">Лікарі</span>
+    </a>
+    <a href="" class="nav-e">
+        <div class="icon">
+            <i class="fa-lg bi bi-question-circle"></i>
+        </div>
+        <span [class.invisible]="!menuExpanded">Допомога</span>
+    </a>
+    <a href="" class="nav-e" (click)="logOut()">
+        <div class="icon">
+            <i class="bi bi-box-arrow-left"></i>
+        </div>
+        <span [class.invisible]="!menuExpanded">Вихід</span>
+    </a>
+</nav>

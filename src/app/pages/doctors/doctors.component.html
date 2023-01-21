@@ -1,0 +1,21 @@
+<app-header page-name="Лікарі">
+    <button pButton routerLink="/add-doctor">
+        Зареєструвати
+    </button>
+</app-header>
+<p-table [value]="doctors">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>ПІБ</th>
+            <th>Спеціалізація</th>
+            <th>Дата народження</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-doctor>
+        <tr (click)="open(doctor)" [class.selected]="selected == doctor">
+            <td>{{doctor.pib}}</td>
+            <td>{{doctor.speciality}}</td>
+            <td>{{doctor.birthDate | dateukr}}</td>
+        </tr>
+    </ng-template>
+</p-table>

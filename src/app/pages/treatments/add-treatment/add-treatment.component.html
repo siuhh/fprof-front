@@ -1,0 +1,78 @@
+<div class="wrap">
+    <div class="inputs">
+        <h2>Новий пацієнт</h2>
+        <div class="patient-data" *ngIf="selectedResult == undefined; else selected">
+            <div class="name">
+                <div class="p-float-label">
+                    <input [(ngModel)]="lastName" id="float-input" type="text" pInputText (change)="search()">
+                    <label for="float-input" class="req">Прізвище</label>
+                </div>
+                <div class="p-float-label">
+                    <input [(ngModel)]="firstName" id="float-input" type="text" pInputText (change)="search()">
+                    <label for="float-input" class="req">Ім'я</label>
+                </div>
+                <div class="p-float-label">
+                    <input [(ngModel)]="fathersName" id="float-input" type="text" pInputText (change)="search()">
+                    <label for="float-input" class="req">По батькові</label>
+                </div>
+            </div>
+            <div class="p-float-label">
+                <p-calendar [(ngModel)]="birthDate" [showIcon]="true" inputId="icon"></p-calendar>
+                <label for="float-input" class="req">Дата народження</label>
+            </div>
+            <div class="p-float-label">
+                <input [(ngModel)]="historyNumber" id="float-input" type="text" pInputText (change)="search()">
+                <label for="float-input">Номер історії хвороб</label>
+            </div>
+        </div>
+        <ng-template #selected>
+            <div class="patient selected replacing-fields">
+                <div class="title">
+                    {{selectedResult!.pib}}
+                    <span class="date">{{selectedResult!.birthDate | dateukr}}</span>
+                </div>
+                <div>Номер історії хвороб: {{selectedResult!.historyNumber}}</div>
+            </div>
+        </ng-template>
+        <div class="p-float-label">
+            <input [(ngModel)]="mainDiagnosis" id="float-input" type="text" pInputText>
+            <label for="float-input" class="req">Діагноз</label>
+        </div>
+        <div class="p-float-label">
+            <textarea [(ngModel)]="additionalInfo" id="float-input" rows="5" cols="40" pInputTextarea
+                [autoResize]="true"></textarea>
+            <label for="float-input">Додаткова інформація</label>
+        </div>
+        <p class="error">{{errorMessage}}</p>
+        <div class="buttons">
+            <button pButton class="p-button-danger" routerLink="/">
+                Відмінити
+            </button>
+            <button pButton (click)="add()">
+                Підтвердити
+            </button>
+        </div>
+    </div>
+    <div class="card">
+        <h3>Результати пошуку</h3>
+        <p class="no-data" *ngIf="searchResults.length == 0">Цей пацієнт ще не проходив лікування</p>
+        <div class="results">
+            <p-scrollPanel [style]="{width: '100%', height: '500px'}">
+                <div class="patient" [class.selected]="selectedResult == patient" *ngFor="let patient of searchResults"
+                    (click)="select(patient)">
+                    <div class="title">
+                        {{patient.pib}}
+                        <span class="date">{{patient.birthDate | dateukr}}</span>
+                    </div>
+                    <div>Номер історії хвороб: {{patient.historyNumber}}</div>
+                </div>
+            </p-scrollPanel>
+        </div>
+        <div *ngIf="searchResults.length != 0" class="patient other" [class.selected]="selectedResult == undefined"
+            (click)="select(undefined)">
+            <div class="title">
+                Інше
+            </div>
+        </div>
+    </div>
+</div>
